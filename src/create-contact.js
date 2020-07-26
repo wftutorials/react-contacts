@@ -2,10 +2,13 @@ import React, {Component} from 'react';
 
 class Contacts extends Component {
 
+    currentid = null;
+
     constructor(props) {
         super(props);
         this.state = {currentContact: this.props.currentContact};
         this.currentContact = this.props.currentContact;
+        this.currentid = this.props.currentContact.id;
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
@@ -15,6 +18,7 @@ class Contacts extends Component {
             this.setState({
                 currentContact: nextProps.currentContact
             });
+            this.currentid = nextProps.currentContact.id;
         }
     }
 
@@ -56,16 +60,21 @@ class Contacts extends Component {
        if(e.target.name == 'phone'){
            this.setState({currentContact : { phone: e.target.value}})
        }
+       if(e.target.name == 'notes'){
+           this.setState({currentContact: {notes: e.target.value}});
+       }
         if(e.target.name == 'id'){
-            this.setState({currentContact : { id: e.target.value}})
+            if(e.target.value != undefined || e.target.value != ''){
+                this.setState({currentContact : { id: e.target.value}});
+                console.log(e.target.value);
+            }
         }
     }
 
     render(){
         return (
             <form onSubmit={this.handleSubmit}>
-                <input name="id" type="hidden" className="form-control"
-                       onChange={this.handleChange} value={this.state.currentContact.id}/>
+                <input name="id" type="hidden" className="form-control" value={this.currentid}/>
 
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Contact Name</label>
@@ -83,6 +92,11 @@ class Contacts extends Component {
                            onChange={this.handleChange}
                            placeholder="545-0000"
                            value={this.state.currentContact.phone}/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="">Note</label>
+                    <textarea onChange={this.handleChange} name="notes" className="form-control" rows="3"
+                    value={this.state.currentContact.notes}></textarea>
                 </div>
                 <button type="submit" className="btn btn-primary">Save contact</button>
             </form>

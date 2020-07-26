@@ -21,7 +21,7 @@ class Contacts extends Component {
 
     listStyle = {
         overflow:"auto",
-        maxHeight: "300px"
+        maxHeight: "500px"
     };
 
 
@@ -49,7 +49,8 @@ class Contacts extends Component {
                 <ul className="list-group">
                     {this.state.items.map(listitem => (
                         <li key={listitem.id} className="list-group-item">
-                            <span><i className="fa fa-user"></i> {listitem.name}</span>
+                            <span onClick={()=>{this.props.viewContact(listitem)}}>
+                                <i className="fa fa-user"></i> {listitem.name}</span>
                             <span>
                                 {listitem.email ? " | " + listitem.email  : ''}</span>
                             <button onClick={()=>{this.props.editContact(listitem)}} className="btn btn-primary btn-sm float-right">Edit</button>
